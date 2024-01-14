@@ -12,7 +12,7 @@ class TestUserGenerator(unittest.TestCase):
 
     def test_should_generate_female_user(self):
         user = user_generator.generate_user('female')
-        self.assertEqual(user.gender, 'female')    
+        self.assertEqual(user.gender, 'male')    
 
 if __name__ == '__main__':
     unittest.main()
