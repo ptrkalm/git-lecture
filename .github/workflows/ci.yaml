@@ -22,11 +22,11 @@ jobs:
             - name: Test and create coverage report
               run: |
                 python -m coverage run --source src -m unittest
-                python -m coverage report >> .coverage_report
+                python -m coverage xml -o coverage_report.xml
             - uses: actions/upload-artifact@v4
               with:
                 name: coverage-report
-                path: .coverage_report
+                path: coverage_report.xml
     coverage:
         needs: test
         name: Code coverage check
@@ -37,7 +37,7 @@ jobs:
                 name: coverage-report
             - uses: themichaelhall/check-code-coverage@v2
               with:
-                report: .coverage_report
+                report: coverage_report.xml
                 required-percentage: 100
 
             
