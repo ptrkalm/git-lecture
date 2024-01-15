@@ -31,17 +31,16 @@ jobs:
                 path: .coverage_report
     coverage:
         needs: test
-        name: Test coverage check
+        name: Code coverage check
         runs-on: ubuntu-latest
         steps:
             - uses: actions/download-artifact@v4
               with: 
                 name: coverage-report
-            - name: Check coverage report
-              uses: orgoro/coverage@v3.1
+            - uses: themichaelhall/check-code-coverage@v2
               with:
-                  coverageFile: .coverage_report
-                  token: ${{ secrets.GITHUB_TOKEN }}
+                report: .coverage_report
+                required-percentage: 100
 
             
 
