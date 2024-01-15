@@ -7,7 +7,7 @@ on:
 
 jobs:
     test:
-        name: Tests check
+        name: Tests and code coverage checks
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v4
@@ -23,25 +23,12 @@ jobs:
               run: |
                 python -m coverage run --source src -m unittest
                 python -m coverage lcov -o coverage_report.lcov
-            - uses: actions/upload-artifact@v4
-              with:
-                name: coverage-report
-                path: coverage_report.lcov
-    coverage:
-        needs: test
-        name: Code coverage check
-        runs-on: ubuntu-latest
-        steps:
-            - uses: actions/download-artifact@v4
-              with: 
-                name: coverage-report
             - uses: devmasx/coverage-check-action@v1.2.0
               with:
                 type: lcov
                 result_path: coverage_report.lcov
                 min_coverage: 100
                 token: ${{ github.token }}
-
             
 
 
