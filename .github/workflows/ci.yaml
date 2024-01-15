@@ -22,11 +22,11 @@ jobs:
             - name: Test and create coverage report
               run: |
                 python -m coverage run --source src -m unittest
-                python -m coverage xml -o coverage_report.xml
+                python -m coverage lcov -o coverage_report.lcov
             - uses: actions/upload-artifact@v4
               with:
                 name: coverage-report
-                path: coverage_report.xml
+                path: coverage_report.lcov
     coverage:
         needs: test
         name: Code coverage check
@@ -35,10 +35,12 @@ jobs:
             - uses: actions/download-artifact@v4
               with: 
                 name: coverage-report
-            - uses: themichaelhall/check-code-coverage@v2
+            - uses: devmasx/coverage-check-action@v1.2.0
               with:
-                report: coverage_report.xml
-                required-percentage: 100
+                type: lcov
+                result_path: coverage_report.lcov
+                min_coverage: 100
+                token: ${{ github.token }}
 
             
 
