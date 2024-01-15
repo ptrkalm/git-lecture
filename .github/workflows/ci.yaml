@@ -1,0 +1,37 @@
+name: CI
+
+on:
+    push:
+        branches:
+            - "*"
+
+jobs:
+    test:
+        name: Tests and code coverage checks
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
+            - name: Setup Python
+              uses: actions/setup-python@v4
+              with:
+                python-version: '3.x'
+            - name: Install dependencies
+              run: |
+                python -m pip install --upgrade pip setuptools coverage
+                pip install .
+            - name: Test and create coverage report
+              run: |
+                python -m coverage run --source src -m unittest
+                python -m coverage lcov -o coverage_report.lcov
+            - uses: devmasx/coverage-check-action@v1.2.0
+              with:
+                type: lcov
+                result_path: coverage_report.lcov
+                min_coverage: 100
+                token: ${{ github.token }}
+            
+
+
+              
+            
+                  
