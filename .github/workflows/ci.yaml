@@ -28,6 +28,7 @@ jobs:
                 name: coverage-report
                 path: .coverage_report
     coverage:
+        needs: test
         name: Test coverage check
         runs-on: ubuntu-latest
         steps:
